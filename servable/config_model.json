@@ -1,0 +1,36 @@
+{
+  "model_config_list": [
+    {
+      "config": {
+        "name": "clip",
+        "base_path": "/saved_mod/clip"
+      }
+    },
+    {
+      "config": {
+        "name": "dino",
+        "base_path": "/saved_mod/dino"
+      }
+    },
+    {
+      "config": {
+        "name": "laion",
+        "base_path": "/saved_mod/laion"
+      }
+    }
+  ],
+  "mediapipe_config_list": [
+    {
+      "name": "clip_graph",
+      "graph_path": "/workspace/graph_clip.pbtxt"
+    },
+    {
+      "name": "dino_graph",
+      "graph_path": "/workspace/graph_dino.pbtxt"
+    },
+    {
+      "name": "laion_graph",
+      "graph_path": "/workspace/graph_laion.pbtxt"
+    }
+  ]
+}

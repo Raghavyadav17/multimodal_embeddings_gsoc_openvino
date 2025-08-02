@@ -4,17 +4,17 @@ import openvino as ov
 import torch
 import os
 
-# Replace this with your LAION model
+
 model_id = "laion/CLIP-ViT-B-32-laion2B-s34B-b79K"
 print(f"Downloading pretrained model: {model_id}")
 
-# Load processor and model
+
 processor = CLIPProcessor.from_pretrained(model_id)
 full_model = CLIPModel.from_pretrained(model_id)
 image_encoder = full_model.vision_model
 image_encoder.eval()
 
-# Dummy image input for tracing
+
 image = Image.new("RGB", (224, 224))
 inputs = processor(images=image, return_tensors="pt")["pixel_values"]
 

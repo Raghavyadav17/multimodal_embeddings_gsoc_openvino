@@ -1,18 +1,27 @@
+from transformers import AutoImageProcessor, AutoModel
+from PIL import Image
+import openvino as ov
+import os
 
-from pyovms import Tensor
-import numpy as np
+model_id="facebook/dinov2-base"
+print(f"Downloading pretrained model {model_id}...")
 
-class OvmsPythonModel:
-    def initialize(self, kwargs: dict):
-        pass
+model=AutoModel.from_pretrained(model_id)
+processor=AutoImageProcessor.from_pretrained(model_id)
 
-    def execute(self, inputs: list) -> list:
-        try:
-            tensor = inputs[0]
-            embedding = np.frombuffer(tensor.data, dtype=np.float32).reshape(tensor.shape)
-            norm = np.linalg.norm(embedding, axis=1, keepdims=True) + 1e-10
-            normalized = embedding / norm
-            return [Tensor(name="embedding", buffer=normalized.astype(np.float32))]
-        except Exception as e:
-            print(">>> ERROR in Postprocessor:", str(e))
-            raise
+image=Image.new("RGB",(224,224))
+inputs=processor(images=image,return_tensors="pt")["pixel_values"]
+
+print("Converting models...")
+ov_model=ov.convert_model(model,example_input=inputs)
+ov.save_model(ov_model,"dino_image_encoder.xml")
+print("Model saved!")
+
+mod_path="saved_mod/dino/1"
+os.makedirs(mod_path,exist_ok=True)
+os.replace("dino_image_encoder.xml", f"{mod_path}/dino_image_encoder.xml")
+os.replace("dino_image_encoder.bin", f"{mod_path}/dino_image_encoder.bin")
+print("Model ready for OVMS")
+
+
+

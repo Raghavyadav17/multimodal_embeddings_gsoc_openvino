@@ -54,12 +54,15 @@ It enables developers to integrate **semantic understanding** into their applica
 ---
 
 ## 📂 Repository Structure
-├── src/ # Core code
-├── models/ # Model files / configs
-├── examples/ # Sample client scripts
-├── docker/ # Dockerfiles
-├── requirements.txt # Python dependencies
-└── README.md # This file
+```plaintext
+├── src/                 # Core code
+├── models/              # Model files / configs
+├── examples/            # Sample client scripts
+├── docker/              # Dockerfiles
+├── requirements.txt     # Python dependencies
+└── README.md            # This file
+
+
 
 
 

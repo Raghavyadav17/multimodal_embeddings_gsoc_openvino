@@ -1,6 +1,6 @@
 # Multimodal Embeddings based on OVMS
 
-**Google Summer of Code 2025 – [Intel-OpenVINO toolkit]**
+**Google Summer of Code 2025 – Intel-OpenVINO toolkit**
 
 ---
 
@@ -53,5 +53,6 @@ It enables developers to integrate **semantic understanding** into their applica
 ---
 
 ## 📂 Repository Structure
+
 
 

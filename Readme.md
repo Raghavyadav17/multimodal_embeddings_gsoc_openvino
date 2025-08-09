@@ -55,12 +55,13 @@ It enables developers to integrate **semantic understanding** into their applica
 
 ## 📂 Repository Structure
 ```plaintext
-├── src/                 # Core code
+├── model_conversion/  #model conversion from Hugging Face to openVINO IR format; .xml and .bin
 ├── models/              # Model files / configs
 ├── examples/            # Sample client scripts
 ├── docker/              # Dockerfiles
 ├── requirements.txt     # Python dependencies
 └── README.md            # This file
+
 
 
 

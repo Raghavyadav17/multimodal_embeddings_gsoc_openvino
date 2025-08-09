@@ -45,7 +45,7 @@ It enables developers to integrate **semantic understanding** into their applica
 
 ## 🛠 Tech Stack
 - **Languages:** Python, C++
-- **Transformers:**Hugging Face
+- **Transformers:** Hugging Face
 - **Model Serving:** OpenVINO Model Server (OVMS)
 - **Frameworks:** PyTorch / TensorFlow (depending on model)
 - **APIs:** REST, gRPC
@@ -54,6 +54,7 @@ It enables developers to integrate **semantic understanding** into their applica
 ---
 
 ## 📂 Repository Structure
+
 
 
 

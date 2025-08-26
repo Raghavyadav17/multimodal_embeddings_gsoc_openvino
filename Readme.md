@@ -63,9 +63,20 @@ pip install -r requirements.txt
 ```bash
 python3 -m venv venv
 cd demos/python_demos/image_embeddings/model_conversion
-python clip_conversion.py (for clip)
+```
+For clip
+```bash
+python clip_conversion.py
+```
+For laion
+```bash
 python laion_conversion.py (for laion)
+```
+
+For siglip
+```bash
 python siglip_conversion.py (for siglip)
+```
 
 
 

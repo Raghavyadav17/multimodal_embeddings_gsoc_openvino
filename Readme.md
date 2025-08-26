@@ -70,7 +70,7 @@ python clip_conversion.py
 ```
 For laion
 ```bash
-python laion_conversion.py 
+python laion_conversion.py
 ```
 
 For siglip
@@ -78,6 +78,29 @@ For siglip
 python siglip_conversion.py
 ```
 
+## Deploying OpenVINO Model Server with the CLIP graph
+Prerequisites:
+-  image of OVMS with Python support and Optimum installed
+Mount the `./servable` which contains:
+- `post.py` and `pre.py` - python scripts which are required for execution.
+- `config_model.json` - which defines which servables should be loaded.
+- `graph_clip.pbtxt`, `graph_laion.pbtxt`, `graph_siglip.pbtxt` - which defines MediaPipe graph containing python nodes.
 
 
+To use CPU
+```bash
+docker run -it --rm \
+-p 9000:9000 -p 8000:8000 \
+-v ${PWD}/servable:/workspace \
+-v ${PWD}/model_conversion/saved_mod/dino:/saved_mod/dino \
+-v ${PWD}/model_conversion/saved_mod/clip:/saved_mod/clip \
+-v ${PWD}/model_conversion/saved_mod/laion:/saved_mod/laion \
+openvino/model_server:py \
+--config_path /workspace/config_model.json \
+--port 9000 --rest_port 8000
+```
 
+To use GPU
+```bash
+docker run -it --rm --device=/dev/dxg --volume /usr/lib/wsl:/usr/lib/wsl -p 9000:9000 -p 8000:8000 -v ${PWD}/servable:/workspace -v ${PWD}/model_conversion/saved_mod/dino:/saved_mod/dino -v ${PWD}/model_conversion/saved_mod/clip:/saved_mod/clip -v ${PWD}/model_conversion/saved_mod/laion:/saved_mod/laion ovms-gpu-custom --config_path /workspace/config_model.json --port 9000 --rest_port 8000
+```

@@ -100,7 +100,7 @@ cd demos/python_demos/image_embeddings
 
 
 To use CPU
-``bash
+```bash
 docker run -it --rm \
 -p 9000:9000 -p 8000:8000 \
 -v ${PWD}/servable:/workspace \
@@ -110,7 +110,6 @@ docker run -it --rm \
 openvino/model_server:py \
 --config_path /workspace/config_model.json \
 --port 9000 --rest_port 8000
-
 ```
 
 To use GPU

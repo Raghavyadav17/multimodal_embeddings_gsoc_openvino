@@ -50,4 +50,22 @@ make release_image GPU=1
    - Allows users to upload images and perform semantic search
 
 
+## Installaion and setup
+
+```bash
+cd demos/python_demos/image_embeddings
+python3 -m venv venv
+pip install -r requirements.txt
+```
+
+
+## Model conversion
+```bash
+python3 -m venv venv
+cd demos/python_demos/image_embeddings/model_conversion
+python clip_conversion.py (for clip)
+python laion_conversion.py (for laion)
+python siglip_conversion.py (for siglip)
+
+
 

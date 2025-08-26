@@ -70,13 +70,14 @@ python clip_conversion.py
 ```
 For laion
 ```bash
-python laion_conversion.py (for laion)
+python laion_conversion.py 
 ```
 
 For siglip
 ```bash
-python siglip_conversion.py (for siglip)
+python siglip_conversion.py
 ```
+
 
 
 

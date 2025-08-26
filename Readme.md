@@ -23,41 +23,31 @@ Else if you want the docker image that supports iGPU's, run:
 make release_image GPU=1
 ```
 
+# Project Architecture
 
+1. **Model Conversion (`model_conversion/`)**
+   - Convert supported multimodal models (e.g., CLIP, Laion, SigLIP) into **OpenVINO IR format**.
+   - Ensures models are optimized for inference on Intel hardware.
 
-flowchart TD
+2. **Servable Pipeline (`servable/`)**
+   - **Preprocessing**: Handles image resizing, normalization(if required).
+   - **Postprocessing**: Handles embedding extraction, vector normalization, and formatting.
+   - **Config File**: `config_model.json` defines model parameters and pipeline configurations.
+   - **MediaPipe Graphs**: Graph definitions for processing inputs/outputs across the 3 models.
 
-subgraph A[Model Conversion]
-    A1[Convert CLIP → IR]
-    A2[Convert SigLIP → IR]
-    A3[Convert BLIP → IR]
-end
+3. **gRPC CLI (`grpc_cli.py`)**
+   - Iterates over a folder of images.
+   - Extracts embeddings using the OpenVINO-served models.
+   - Stores embeddings in a **Vector Database** (Qdrant)
 
-subgraph B[Servable Pipeline]
-    B1[Preprocessing (resize, normalize)]
-    B2[OpenVINO Model Server]
-    B3[Postprocessing (embedding extraction)]
-    B4[MediaPipe Graphs]
-end
+4. **Search API (`search_images.py`)**
+   - Accepts an input query image.
+   - Generates its embedding and queries the Vector DB.
+   - Returns the most similar images based on cosine similarity or other distance metrics.
 
-subgraph C[gRPC CLI]
-    C1[Loop through folder of images]
-    C2[Generate embeddings]
-    C3[Store in Vector DB]
-end
-
-subgraph D[Search API]
-    D1[Query Image]
-    D2[Generate embedding]
-    D3[Vector DB Lookup]
-    D4[Return Similar Images]
-end
-
-A --> B
-B --> C
-C --> D
-
-
+5. **Search App (`streamlit_app.py`)**
+   - Provided a frontend for the users to interact with the project and test it
+   - Allows users to upload images and perform semantic search
 
 
 

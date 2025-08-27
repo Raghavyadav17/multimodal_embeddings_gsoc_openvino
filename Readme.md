@@ -85,7 +85,7 @@ For Dino
 python dino_conversion.py
 ```
 
-## Deploying OpenVINO Model Server with the CLIP graph
+## Deploying OpenVINO Model Server
 Prerequisites:
 -  image of OVMS with Python support and Optimum installed
 Mount the `./servable` which contains:
@@ -100,7 +100,7 @@ cd demos/python_demos/image_embeddings
 
 
 To use CPU
-```bash
+``bash
 docker run -it --rm \
 -p 9000:9000 -p 8000:8000 \
 -v ${PWD}/servable:/workspace \
@@ -110,11 +110,12 @@ docker run -it --rm \
 openvino/model_server:py \
 --config_path /workspace/config_model.json \
 --port 9000 --rest_port 8000
+
 ```
 
 To use GPU
 ```bash
-docker run -it --rm --device=/dev/dxg --volume /usr/lib/wsl:/usr/lib/wsl -p 9000:9000 -p 8000:8000 -v ${PWD}/servable:/workspace -v ${PWD}/model_conversion/saved_mod/siglip:/saved_mod/siglip -v ${PWD}/model_conversion/saved_mod/clip:/saved_mod/clip -v ${PWD}/model_conversion/saved_mod/laion:/saved_mod/laion ovms-gpu-custom --config_path /workspace/config_model.json --port 9000 --rest_port 8000
+docker run -it --rm --device=/dev/dxg --volume /usr/lib/wsl:/usr/lib/wsl -p 9000:9000 -p 8000:8000 -v ${PWD}/servable:/workspace -v ${PWD}/model_conversion/saved_mod/dino:/saved_mod/dino -v ${PWD}/model_conversion/saved_mod/clip:/saved_mod/clip -v ${PWD}/model_conversion/saved_mod/laion:/saved_mod/laion ovms-gpu-custom --config_path /workspace/config_model.json --port 9000 --rest_port 8000
 ```
 
 ## Deploying the Vector Database
@@ -128,4 +129,41 @@ cd demos/python_demos/image_embeddings
 docker run -p 6333:6333 qdrant/qdrant
 ```
 
+## Running the Demo
+
+Once the vector database is running and the OpenVINO Model Server is deployed, open another terminal and run:
+
+```bash
+source venv/bin/activate
+cd demos/python_demos/image_embeddings
+python grpc_cli.py
+```
+Once you run this you should see something like this
+```bash
+(venv) raghav@g15r17:/mnt/c/Users/Raghav/model_server/demos/python_demos/image_embeddings$ python grpc_cli.py
+🔧 Building Image Database
+==================================================
+Server Ready: True
+
+Select a model to use:
+1. clip_graph
+2. dino_graph
+3. laion_graph
+Enter the number corresponding to the model: 1
+
+You selected: clip_graph
+Saved model selection: clip_graph
+Creating Qdrant collection: image_embeddings
+
+Found 106 images in './demo_images'
+
+Inserted 106 embeddings into Qdrant collection 'image_embeddings'
+Avg Inference Time: 75.72 ms
+Total Processing Time: 8.59 s
+Throughput: 12.34 images/sec
+
+✅ Database built successfully!
+📊 Total images processed: 106
+🎯 Model saved for future searches: clip_graph
+```
 

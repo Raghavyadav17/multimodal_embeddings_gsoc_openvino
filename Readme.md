@@ -100,7 +100,7 @@ cd demos/python_demos/image_embeddings
 
 
 To use CPU
-``bash
+```bash
 docker run -it --rm \
 -p 9000:9000 -p 8000:8000 \
 -v ${PWD}/servable:/workspace \
@@ -206,5 +206,6 @@ Embedding Inference Latency : 155.94 ms
 Qdrant Search Latency       : 32.01 ms
 End-to-End Latency          : 2165.65 ms
 ```
+
 
 

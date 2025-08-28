@@ -137,33 +137,74 @@ Once the vector database is running and the OpenVINO Model Server is deployed, o
 source venv/bin/activate
 cd demos/python_demos/image_embeddings
 python grpc_cli.py
+or
+python grpc_cli.py --model "your selected model name"
 ```
 Once you run this you should see something like this
 ```bash
-(venv) raghav@g15r17:/mnt/c/Users/Raghav/model_server/demos/python_demos/image_embeddings$ python grpc_cli.py
-🔧 Building Image Database
+Building Image Database
 ==================================================
-Server Ready: True
+Waiting for server to be ready...
+Server Ready Check:   0%|                                                                                                                             | 0/15 [00:00<?, ?sec/s]Server is ready!
+Server Ready Check: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 15/15 [00:00<00:00, 207.60sec/s]
 
 Select a model to use:
 1. clip_graph
 2. dino_graph
 3. laion_graph
 Enter the number corresponding to the model: 1
-
-You selected: clip_graph
 Saved model selection: clip_graph
-Creating Qdrant collection: image_embeddings
 
-Found 106 images in './demo_images'
+✓ Found 106 images in './demo_images'
 
-Inserted 106 embeddings into Qdrant collection 'image_embeddings'
-Avg Inference Time: 75.72 ms
-Total Processing Time: 8.59 s
-Throughput: 12.34 images/sec
+Processing images and generating embeddings...
+Processing Images: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 106/106 [00:05<00:00, 20.61img/s]
 
-✅ Database built successfully!
-📊 Total images processed: 106
-🎯 Model saved for future searches: clip_graph
+Uploading embeddings to Qdrant...
+Uploading to Database: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 16.28batch/s]
+
+Database Build Complete!
+Statistics:
+   • Images processed: 106
+   • Average inference time: 43.66 ms
+   • Total processing time: 5.21 s
+   • Throughput: 20.33 images/sec
+   • Collection: 'image_embeddings'
+
+Database built successfully!
+Total images processed: 106
+Model saved for future searches: clip_graph
 ```
+
+In this step, the images stored in the folder are converted into embeddings and saved in Qdrant. Once this is done, we can perform image-to-image search for any image placed in the directory against the ones stored in the vector database.
+
+Next up run
+```bash
+python search_images.py ./demo_img.jpg 5
+```
+You should see
+```bash
+Searching for Similar Images
+==================================================
+Query: ./demo_img.jpg
+Auto-loaded Model: clip_graph
+Top K: 5
+
+Top 5 similar images:
+--------------------------------------------------
+1. mountains.jpg (similarity: 0.744)
+2. img_87.jpg (similarity: 0.648)
+3. img_23.jpg (similarity: 0.638)
+4. img_48.jpg (similarity: 0.630)
+5. oldesttree.jpg (similarity: 0.616)
+
+Results saved to: ./similar_images
+
+Performance Summary
+--------------------------------------------------
+Embedding Inference Latency : 155.94 ms
+Qdrant Search Latency       : 32.01 ms
+End-to-End Latency          : 2165.65 ms
+```
+
 

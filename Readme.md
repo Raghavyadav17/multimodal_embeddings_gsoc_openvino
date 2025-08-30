@@ -92,7 +92,7 @@ cd demos/python_demos/image_embeddings
 
 
 To use CPU
-``bash
+```bash
 docker run -it --rm \
 -p 9000:9000 -p 8000:8000 \
 -v ${PWD}/servable:/workspace \
@@ -206,4 +206,5 @@ If you want a frontend interface that allows you to upload images, run the follo
 ```bash
 streamlit run streamlit_app.py
 ```
+
 
